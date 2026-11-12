@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Pedido · Bareto Club</title>
+<style>
+:root{
+  --bg:#f4f6ee; --card:#ffffff; --ink:#1b2116; --muted:#5f6b58; --line:#dde3d1;
+  --accent:#4f7d00; --accent-ink:#ffffff; --soft:#eaf4d0; --lima:#b9e63c; --danger:#b3261e;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#12160f; --card:#1b2116; --ink:#eef2e6; --muted:#a3ad99; --line:#333c2b;
+         --accent:#b9e63c; --accent-ink:#12160f; --soft:#263216; --danger:#ff8a80; }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:560px; margin:0 auto; padding:16px 16px 120px}
+header.top{display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:8px 2px 14px}
+header.top h1{font-size:1.35rem; margin:0; letter-spacing:-.01em}
+header.top span{color:var(--muted); font-size:.85rem}
+section{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin:0 0 14px}
+section h2{font-size:1rem; margin:0 0 4px}
+section p.ayuda{margin:0 0 12px; color:var(--muted); font-size:.88rem}
+.opciones{display:grid; gap:8px}
+.op{display:flex; gap:12px; align-items:center; border:1.5px solid var(--line); border-radius:12px;
+  padding:12px 14px; cursor:pointer; background:transparent; color:inherit; font:inherit; text-align:left; width:100%}
+.op[aria-pressed="true"]{border-color:var(--accent); background:var(--soft)}
+.op .t{font-weight:650}
+.op .d{color:var(--muted); font-size:.88rem}
+.op .p{margin-left:auto; font-weight:650; white-space:nowrap; font-variant-numeric:tabular-nums}
+.gen{display:flex; align-items:center; gap:10px; padding:10px 0; border-top:1px solid var(--line)}
+.gen:first-of-type{border-top:0}
+.gen .n{flex:1; min-width:0}
+.gen .n b{display:block}
+.gen .n small{color:var(--muted)}
+.paso{display:flex; align-items:center; gap:6px}
+.paso button{width:40px; height:40px; border-radius:10px; border:1.5px solid var(--line); background:transparent;
+  color:inherit; font-size:1.25rem; cursor:pointer}
+.paso button:disabled{opacity:.35; cursor:default}
+.paso output{min-width:52px; text-align:center; font-weight:650; font-variant-numeric:tabular-nums}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 8px}
+.chip{border:1.5px solid var(--line); border-radius:999px; padding:7px 12px; background:transparent; color:inherit;
+  font:inherit; font-size:.88rem; cursor:pointer}
+.estado{margin-top:10px; font-size:.9rem; color:var(--muted)}
+.estado.ok{color:var(--accent); font-weight:600}
+.estado.mal{color:var(--danger); font-weight:600}
+label{display:block; font-size:.88rem; color:var(--muted); margin:10px 0 4px}
+input[type=text], input[type=password], textarea, select{width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line);
+  background:var(--card); color:var(--ink); font:inherit}
+textarea{min-height:64px; resize:vertical}
+input:focus, textarea:focus, select:focus, button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.resumen{white-space:pre-wrap; font-size:.92rem; background:var(--soft); border-radius:10px; padding:12px; margin:8px 0 0}
+.pie{position:fixed; left:0; right:0; bottom:0; background:var(--card); border-top:1px solid var(--line); padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+.pie .in{max-width:560px; margin:0 auto; display:flex; gap:10px; align-items:center}
+.pie .tot{flex:1; min-width:0}
+.pie .tot small{display:block; color:var(--muted); font-size:.78rem}
+.pie .tot b{font-size:1.15rem; font-variant-numeric:tabular-nums}
+.btn{border:0; border-radius:12px; padding:13px 16px; font:inherit; font-weight:650; cursor:pointer;
+  background:var(--accent); color:var(--accent-ink)}
+.btn:disabled{opacity:.45; cursor:default}
+.btn.sec{background:transparent; color:var(--ink); border:1.5px solid var(--line)}
+.aviso{font-size:.85rem; color:var(--muted); margin:10px 2px 0}
+.falta{color:var(--danger); font-size:.88rem; margin:8px 0 0}
+.prox{color:var(--muted); font-size:.85rem; margin:10px 0 0}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const PAYLOAD = {"v":1,"salt":"h1H06xyApNLvNUnkZU+hkA==","iv":"6zfJLP45Y/XQuPjk","ct":"xxoY5nLVmFYQs0q/z9i8VFSGw9PK4DiJPveaNF4QTY55OZQetQ65Bc78wDcv0DzFRTLTbP6Vg++PmHNKRoIUwrt3/jNI0sJutnpflGzposMyfL6DQwHWqLkVhr1tVWFu4i7wp8Do9tEYbF6Q/xLlE8oyR77IrRfOeybafgJIRXT+YaI2RifdZWWxDf+F5fmjmPh0hworEDZoEM7Zc3dTIPiAvMxJfZIMJiB+lXrzGbQrferElzTjDTLYrqu/sR+2AL2Y/L+y0iVm1zFgNzccTabaCpo9WyOPk/bRNMykdJNCRTZIldezbpqIn9lDxHpbRJTbJAZ/Scr/7DoKB0JGM6b4k8SxOMEI/j7ZWs1+96K1oclTo+htWWWHZB/LT3wN7FSSOg8T2K0DdS6ByEur8Oyu3Ddq7pADL2Q/h8QQlAHbheoLb9J4Fh4Qc5yyep54i129B7CPGYHAoDqPiQ4vBNmTSZJK4Yr/p2w0tR8ml3BCedE6ylOOCI0n/aNbSCZI8kCGA7o9N7/yRbLK6ySFQ0yOU05AmSR+R8qfQRLkHEVxyIEKkC1MCFxsMKX70ji7+eqT4Z3Uzxyf82DoXl9wvujQej61pn+N/8oZ2SH43t6qTYbZYZ4UUOYqtnuCIH/mF2VUVEdvKXbAaCkqxVw6FG+3iOlXsHJ/w3Cvq5qpuVmn3k+/3wjta5hRDH+2fJMVtSWonbYaihrP7fz62iC2CHvXqim2YMDoRg9TGyJzjXQ2WxYPFKbZUq+FcPyX5vSo9mWjr9IzPDTCd60xaTBIbfYCfTKDJF5yXcJicGqFiaJ2rE+v2/2R/4SPPX+T2VW18cqwAj6xX8e6wl3qX2sh1ij37/o4thhmUT6gQ3Ga4HreI/rkLS7SpLxXIGalGYKn9vOnMFBpc2HePo1WBmM1j3dwHEJavMILYaUlIXYxi4HiQiY="};
+const $ = (s, r=document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money = n => '$ ' + Math.round(n || 0).toLocaleString('es-AR');
+const b64d = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+function b64url(u8){ let s=''; for(const b of u8) s += String.fromCharCode(b); return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+const mem = { get(k){ try{ return localStorage.getItem('bc_pedido_'+k) || ''; }catch(e){ return ''; } },
+              set(k,v){ try{ localStorage.setItem('bc_pedido_'+k, v); }catch(e){} } };
+
+let C = null;            // configuracion del club (membresias, geneticas, franjas)
+const P = { memb:null, flores:{}, prExtra:0, prGen:'', franja:'', pago:'' };
+
+async function descifrar(codigo){
+  const enc = new TextEncoder();
+  const km = await crypto.subtle.importKey('raw', enc.encode(codigo.trim().toUpperCase()), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey({name:'PBKDF2', salt:b64d(PAYLOAD.salt), iterations:150000, hash:'SHA-256'},
+    km, {name:'AES-GCM', length:256}, false, ['decrypt']);
+  const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:b64d(PAYLOAD.iv)}, key, b64d(PAYLOAD.ct));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+
+async function iniciar(){
+  const app = $('#app');
+  if(!PAYLOAD){ app.innerHTML = '<section><h2>Formulario sin configurar</h2><p class="ayuda">Este archivo es la plantilla. El formulario para pacientes se genera desde el sistema de gestión.</p></section>'; return; }
+  if(PAYLOAD.plain){ C = PAYLOAD.plain; return pintar(); }
+  const guardado = mem.get('codigo');
+  if(guardado){ try{ C = await descifrar(guardado); return pintar(); }catch(e){ mem.set('codigo',''); } }
+  app.innerHTML = '<header class="top"><h1>Bareto Club</h1></header>'
+    + '<section><h2>Ingresá tu código de socio</h2><p class="ayuda">Es el código que te dimos al asociarte. Si no lo tenés, pedilo por WhatsApp.</p>'
+    + '<form id="fCod"><label for="cod">Código</label><input id="cod" type="password" autocomplete="off" required>'
+    + '<p class="falta" id="codErr" hidden>Ese código no es correcto.</p>'
+    + '<p style="margin:14px 0 0"><button class="btn" type="submit">Entrar</button></p></form></section>';
+  $('#fCod').addEventListener('submit', async e => {
+    e.preventDefault();
+    const v = $('#cod').value;
+    try{ C = await descifrar(v); mem.set('codigo', v); pintar(); }
+    catch(err){ $('#codErr').hidden = false; }
+  });
+}
+
+const membSel = () => C.membresias.find(m => m.id === P.memb) || null;
+const sumFlores = () => Object.values(P.flores).reduce((a,b) => a + b, 0);
+function maxExtra(){ const m = membSel(); if(!m || !C.prActivo) return 0;
+  return Math.max(0, Math.floor((C.tope - m.gramos - m.prRegalo * C.prGramos) / C.prGramos)); }
+const total = () => { const m = membSel(); return m ? m.precio + P.prExtra * C.prPrecio : 0; };
+
+function pintar(){
+  const app = $('#app');
+  const membs = C.membresias.map(m => {
+    const tot = m.gramos + m.prRegalo * C.prGramos;
+    const det = m.prRegalo ? tot + ' g en total: ' + m.gramos + ' g de flores + ' + m.prRegalo + ' pre-rolled' : m.gramos + ' g de flores secas';
+    return '<button type="button" class="op" data-memb="'+esc(m.id)+'" aria-pressed="false"><span><span class="t">'+esc(m.nombre)+'</span><br><span class="d">'+esc(det)+'</span></span><span class="p">'+money(m.precio)+'</span></button>';
+  }).join('');
+  const franjas = C.franjas.map(f => '<button type="button" class="op" data-franja="'+esc(f)+'" aria-pressed="false"><span class="t">'+esc(f)+'</span></button>').join('');
+  const pagos = C.pagos.map(f => '<button type="button" class="op" data-pago="'+esc(f)+'" aria-pressed="false"><span class="t">'+esc(f)+'</span></button>').join('');
+  app.innerHTML =
+    '<header class="top"><h1>'+esc(C.club)+'</h1><span>Pedido</span></header>'
+  + '<section><h2>1. Membresía</h2><p class="ayuda">Elegí una.</p><div class="opciones">'+membs+'</div></section>'
+  + '<section id="sGen" hidden></section>'
+  + '<section id="sPr" hidden></section>'
+  + '<section><h2>4. Entrega</h2><p class="ayuda">¿Cuándo te lo llevamos?</p><div class="opciones">'+franjas+'</div>'
+  +   '<label for="dir">Dirección de entrega</label><input id="dir" type="text" autocomplete="street-address" placeholder="Calle, número, depto.">'
+  +   '<label for="ref">Barrio o referencia (opcional)</label><input id="ref" type="text"></section>'
+  + '<section><h2>5. Tus datos</h2><label for="nom">Nombre y apellido</label><input id="nom" type="text" autocomplete="name">'
+  +   '<label for="dni">DNI</label><input id="dni" type="text" inputmode="numeric" autocomplete="off"></section>'
+  + '<section><h2>6. Forma de pago</h2><div class="opciones">'+pagos+'</div>'
+  +   '<label for="nota">Algo que quieras aclarar (opcional)</label><textarea id="nota"></textarea></section>'
+  + '<section><h2>Resumen</h2><div class="resumen" id="res">Elegí una membresía para empezar.</div><p class="falta" id="falta"></p>'
+  +   '<p style="margin:12px 0 0"><button type="button" class="btn sec" id="bCopiar" disabled>Copiar pedido</button></p>'
+  +   '<p class="aviso">Al tocar “Enviar por WhatsApp” se abre el chat con el pedido ya escrito. Solo falta que lo envíes.</p></section>'
+  + (C.version ? '<p class="aviso" style="text-align:center">Formulario actualizado el ' + esc(C.version) + '</p>' : '')
+  + '<div class="pie"><div class="in"><div class="tot"><small>Total</small><b id="tot">$ 0</b></div>'
+  +   '<button type="button" class="btn" id="bEnviar" disabled>Enviar por WhatsApp</button></div></div>';
+  $('#dir').value = mem.get('dir'); $('#ref').value = mem.get('ref'); $('#nom').value = mem.get('nom'); $('#dni').value = mem.get('dni');
+  app.addEventListener('click', alTocar);
+  app.addEventListener('input', actualizar);
+  $('#bEnviar').addEventListener('click', enviar);
+  $('#bCopiar').addEventListener('click', copiar);
+  actualizar();
+}
+
+function alTocar(e){
+  const b = e.target.closest('button'); if(!b) return;
+  const d = b.dataset;
+  if(d.memb){ P.memb = d.memb; P.flores = {}; P.prExtra = 0;
+    if(C.geneticas.length === 1) P.flores[C.geneticas[0].id] = membSel().gramos;
+    pintarGen(); pintarPr(); }
+  else if(d.franja){ P.franja = d.franja; }
+  else if(d.pago){ P.pago = d.pago; }
+  else if(d.todo){ P.flores = {}; P.flores[d.todo] = membSel().gramos; }
+  else if(d.mitad){ const m = membSel(), a = Math.ceil(m.gramos/2); P.flores = {}; P.flores[C.geneticas[0].id] = a; P.flores[C.geneticas[1].id] = m.gramos - a; }
+  else if(d.mas){ const libre = membSel().gramos - sumFlores(); P.flores[d.mas] = (P.flores[d.mas]||0) + Math.min(C.paso, libre); }
+  else if(d.menos){ P.flores[d.menos] = Math.max(0, (P.flores[d.menos]||0) - C.paso); }
+  else if(d.pr){ P.prExtra = Math.min(maxExtra(), Math.max(0, P.prExtra + Number(d.pr))); }
+  else return;
+  actualizar();
+}
+
+function pintarGen(){
+  const m = membSel(), s = $('#sGen'); s.hidden = false;
+  let chips = C.geneticas.map(x => '<button type="button" class="chip" data-todo="'+esc(x.id)+'">Todo '+esc(x.nombre)+'</button>').join('');
+  if(C.geneticas.length === 2) chips += '<button type="button" class="chip" data-mitad="1">Mitad y mitad</button>';
+  const filas = C.geneticas.map(x => '<div class="gen"><div class="n"><b>'+esc(x.nombre)+'</b><small>'+esc([x.banco, x.descripcion].filter(Boolean).join(' · '))+'</small></div>'
+    + '<div class="paso"><button type="button" data-menos="'+esc(x.id)+'" aria-label="Menos '+esc(x.nombre)+'">−</button><output data-out="'+esc(x.id)+'">0 g</output>'
+    + '<button type="button" data-mas="'+esc(x.id)+'" aria-label="Más '+esc(x.nombre)+'">+</button></div></div>').join('');
+  s.innerHTML = '<h2>2. Genética</h2><p class="ayuda">Repartí los '+m.gramos+' g de flores como quieras.</p><div class="chips">'+chips+'</div>'+filas+'<div class="estado" id="eGen"></div>';
+}
+
+function pintarPr(){
+  const m = membSel(), s = $('#sPr');
+  if(!C.prActivo && !m.prRegalo){ s.hidden = true; return; }
+  s.hidden = false;
+  const ops = '<option value="">Indistinto</option>' + C.geneticas.map(x => '<option value="'+esc(x.id)+'">'+esc(x.nombre)+'</option>').join('');
+  let h = '<h2>3. Pre-rolled</h2>';
+  h += m.prRegalo ? '<p class="ayuda">Tu membresía incluye '+m.prRegalo+' pre-rolled de '+C.prGramos+' g.</p>' : '<p class="ayuda">Tu membresía no incluye pre-rolled.</p>';
+  if(C.prActivo && maxExtra() > 0){
+    h += '<div class="gen"><div class="n"><b>Adicionales</b><small>'+money(C.prPrecio)+' cada uno</small></div><div class="paso">'
+      + '<button type="button" data-pr="-1" aria-label="Menos pre-rolled">−</button><output id="oPr">0</output><button type="button" data-pr="1" aria-label="Más pre-rolled">+</button></div></div>';
+  } else if(C.prActivo){
+    h += '<p class="ayuda">Con esta membresía ya llegás al máximo de '+C.tope+' g por entrega, así que no se pueden sumar adicionales.</p>';
+  }
+  h += '<div id="prGenBox"><label for="prGen">Genética de los pre-rolled</label><select id="prGen">'+ops+'</select></div>';
+  if(C.proximamente && C.proximamente.length) h += '<p class="prox">Próximamente: '+esc(C.proximamente.join(', '))+'.</p>';
+  s.innerHTML = h;
+  $('#prGen').value = P.prGen;
+}
+
+function datos(){
+  return { nom:$('#nom').value.trim(), dni:$('#dni').value.trim(), dir:$('#dir').value.trim(), ref:$('#ref').value.trim(), nota:$('#nota').value.trim() };
+}
+
+function faltantes(){
+  const m = membSel(), d = datos(), f = [];
+  if(!m) return ['elegir una membresía'];
+  if(sumFlores() !== m.gramos) f.push('repartir los ' + m.gramos + ' g entre las genéticas');
+  if(!P.franja) f.push('elegir el horario de entrega');
+  if(!d.dir) f.push('la dirección de entrega');
+  if(!d.nom) f.push('tu nombre y apellido');
+  if(!d.dni) f.push('tu DNI');
+  if(!P.pago) f.push('la forma de pago');
+  return f;
+}
+
+function textoPedido(conCodigo){
+  const m = membSel(), d = datos();
+  const prs = m.prRegalo + P.prExtra;
+  const gen = id => (C.geneticas.find(x => x.id === id) || {}).nombre || '';
+  const fl = C.geneticas.filter(x => P.flores[x.id] > 0).map(x => P.flores[x.id] + ' g ' + x.nombre).join(' + ');
+  const L = ['*Pedido ' + C.club + '*', 'Nombre: ' + d.nom, 'DNI: ' + d.dni, 'Membresía: ' + m.nombre + ' — ' + money(m.precio), 'Flores: ' + fl];
+  if(prs){
+    const partes = []; if(m.prRegalo) partes.push(m.prRegalo + ' con la membresía'); if(P.prExtra) partes.push(P.prExtra + ' adicional' + (P.prExtra > 1 ? 'es' : '') + ' (' + money(P.prExtra * C.prPrecio) + ')');
+    L.push('Pre-rolled: ' + partes.join(' + ') + ' — ' + (P.prGen ? gen(P.prGen) : 'indistinto'));
+  }
+  L.push('Entrega: ' + P.franja, 'Dirección: ' + d.dir + (d.ref ? ' (' + d.ref + ')' : ''), 'Pago: ' + P.pago, 'Total: ' + money(total()));
+  if(d.nota) L.push('Nota: ' + d.nota);
+  if(!conCodigo) return L.join('\n');
+  const datosPedido = { v:1, r:P.ref, t:new Date().toISOString(), n:d.nom, d:d.dni, mi:m.id, mn:m.nombre, mp:m.precio, pr:m.prRegalo,
+    fl:C.geneticas.filter(x => P.flores[x.id] > 0).map(x => [x.id, x.nombre, P.flores[x.id]]),
+    pe:P.prExtra, pp:C.prPrecio, pg:P.prGen, pgn:P.prGen ? gen(P.prGen) : '', fr:P.franja, di:d.dir, re:d.ref, pa:P.pago, no:d.nota, to:total() };
+  const cod = b64url(new TextEncoder().encode(JSON.stringify(datosPedido)));
+  return L.join('\n') + '\n\nCódigo del pedido (no borrar):\n#BC1.' + cod + '#';
+}
+
+function actualizar(){
+  P.ref = '';            // cualquier cambio hace que sea un pedido distinto
+  const m = membSel();
+  document.querySelectorAll('[data-memb]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.memb === P.memb)));
+  document.querySelectorAll('[data-franja]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.franja === P.franja)));
+  document.querySelectorAll('[data-pago]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.pago === P.pago)));
+  if(m){
+    const libre = m.gramos - sumFlores();
+    C.geneticas.forEach(x => {
+      const o = document.querySelector('[data-out="'+x.id+'"]'); if(o) o.textContent = (P.flores[x.id]||0) + ' g';
+      const mas = document.querySelector('[data-mas="'+x.id+'"]'), menos = document.querySelector('[data-menos="'+x.id+'"]');
+      if(mas) mas.disabled = libre <= 0; if(menos) menos.disabled = !(P.flores[x.id] > 0);
+    });
+    const e = $('#eGen');
+    if(e){ e.className = 'estado ' + (libre === 0 ? 'ok' : ''); e.textContent = libre === 0 ? 'Listo: ' + m.gramos + ' g repartidos.' : 'Te falta repartir ' + libre + ' g.'; }
+    const sel = $('#prGen'); if(sel) P.prGen = sel.value;
+    const oPr = $('#oPr'); if(oPr){ oPr.textContent = P.prExtra;
+      document.querySelector('[data-pr="1"]').disabled = P.prExtra >= maxExtra(); document.querySelector('[data-pr="-1"]').disabled = P.prExtra <= 0; }
+    const box = $('#prGenBox'); if(box) box.hidden = (m.prRegalo + P.prExtra) === 0;
+  }
+  const d = datos(); mem.set('dir', d.dir); mem.set('ref', d.ref); mem.set('nom', d.nom); mem.set('dni', d.dni);
+  const f = faltantes(), listo = f.length === 0;
+  $('#tot').textContent = money(total());
+  $('#res').textContent = m ? (listo ? textoPedido(false) : m.nombre + ' — ' + money(total())) : 'Elegí una membresía para empezar.';
+  $('#falta').textContent = !m || listo ? '' : 'Falta: ' + f.join(', ') + '.';
+  $('#bEnviar').disabled = !listo; $('#bCopiar').disabled = !listo;
+}
+
+function refNueva(){ if(!P.ref) P.ref = Math.random().toString(36).slice(2, 8).toUpperCase(); }
+function enviar(){
+  refNueva();
+  const num = String(C.whatsapp || '').replace(/\D/g, '');
+  window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(textoPedido(true)), '_blank');
+}
+async function copiar(){
+  refNueva();
+  const t = textoPedido(true), b = $('#bCopiar');
+  try{ await navigator.clipboard.writeText(t); }
+  catch(e){ const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); document.execCommand('copy'); a.remove(); }
+  b.textContent = 'Copiado'; setTimeout(() => { b.textContent = 'Copiar pedido'; }, 1800);
+}
+iniciar();
+</script>
+</body>
+</html>
