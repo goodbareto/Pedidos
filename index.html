@@ -49,7 +49,7 @@ section p.ayuda{margin:0 0 12px; color:var(--muted); font-size:.88rem}
 .estado.ok{color:var(--accent); font-weight:600}
 .estado.mal{color:var(--danger); font-weight:600}
 label{display:block; font-size:.88rem; color:var(--muted); margin:10px 0 4px}
-input[type=text], input[type=password], textarea, select{width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line);
+input[type=text], input[type=tel], input[type=password], textarea, select{width:100%; padding:12px; border-radius:10px; border:1.5px solid var(--line);
   background:var(--card); color:var(--ink); font:inherit}
 textarea{min-height:64px; resize:vertical}
 input:focus, textarea:focus, select:focus, button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
@@ -66,12 +66,18 @@ input:focus, textarea:focus, select:focus, button:focus-visible{outline:2px soli
 .aviso{font-size:.85rem; color:var(--muted); margin:10px 2px 0}
 .falta{color:var(--danger); font-size:.88rem; margin:8px 0 0}
 .prox{color:var(--muted); font-size:.85rem; margin:10px 0 0}
+.hola{margin:0 2px 12px; color:var(--muted)}
+.dom{background:var(--soft); border-radius:10px; padding:10px 12px; margin:12px 0 0}
+.dom small{display:block; color:var(--muted); font-size:.8rem}
+.dom b{display:block}
+.dom span{display:block; font-size:.88rem; color:var(--muted)}
+.botones{display:flex; gap:10px; flex-wrap:wrap; margin:14px 0 0}
 </style>
 </head>
 <body>
 <main id="app"></main>
 <script>
-const PAYLOAD = {"v":1,"salt":"h1H06xyApNLvNUnkZU+hkA==","iv":"6zfJLP45Y/XQuPjk","ct":"xxoY5nLVmFYQs0q/z9i8VFSGw9PK4DiJPveaNF4QTY55OZQetQ65Bc78wDcv0DzFRTLTbP6Vg++PmHNKRoIUwrt3/jNI0sJutnpflGzposMyfL6DQwHWqLkVhr1tVWFu4i7wp8Do9tEYbF6Q/xLlE8oyR77IrRfOeybafgJIRXT+YaI2RifdZWWxDf+F5fmjmPh0hworEDZoEM7Zc3dTIPiAvMxJfZIMJiB+lXrzGbQrferElzTjDTLYrqu/sR+2AL2Y/L+y0iVm1zFgNzccTabaCpo9WyOPk/bRNMykdJNCRTZIldezbpqIn9lDxHpbRJTbJAZ/Scr/7DoKB0JGM6b4k8SxOMEI/j7ZWs1+96K1oclTo+htWWWHZB/LT3wN7FSSOg8T2K0DdS6ByEur8Oyu3Ddq7pADL2Q/h8QQlAHbheoLb9J4Fh4Qc5yyep54i129B7CPGYHAoDqPiQ4vBNmTSZJK4Yr/p2w0tR8ml3BCedE6ylOOCI0n/aNbSCZI8kCGA7o9N7/yRbLK6ySFQ0yOU05AmSR+R8qfQRLkHEVxyIEKkC1MCFxsMKX70ji7+eqT4Z3Uzxyf82DoXl9wvujQej61pn+N/8oZ2SH43t6qTYbZYZ4UUOYqtnuCIH/mF2VUVEdvKXbAaCkqxVw6FG+3iOlXsHJ/w3Cvq5qpuVmn3k+/3wjta5hRDH+2fJMVtSWonbYaihrP7fz62iC2CHvXqim2YMDoRg9TGyJzjXQ2WxYPFKbZUq+FcPyX5vSo9mWjr9IzPDTCd60xaTBIbfYCfTKDJF5yXcJicGqFiaJ2rE+v2/2R/4SPPX+T2VW18cqwAj6xX8e6wl3qX2sh1ij37/o4thhmUT6gQ3Ga4HreI/rkLS7SpLxXIGalGYKn9vOnMFBpc2HePo1WBmM1j3dwHEJavMILYaUlIXYxi4HiQiY="};
+const PAYLOAD = {"v":1,"salt":"U1lcrHzyBMVVtd8KjRb78w==","iv":"rdyNlO78XuO/7efl","ct":"lXj96Ov3Josq5swc5eW8zo+7vhNRBax0IzHFXrVecPhjt0vjIs1L+4OqntRC6W+kZ/AuAXl1ms+3+AXrkgETTLeh4Gt5usm9q21muNY+BgO+EtI8/JdfHZPNI7gY+pYIvZUt613s10j2qlRG52/akLsZZiHPKt5txy9j9EeLLok6VcVvAyL7AbTsbQ0MaGSrpxH/TlGGv6j3IrP7l+mcF0TV/kJ6QsoeFGlfnI6d0zE3bzhfMOAtD/Img3pSzlRS8FCa6bptD3izz83YjRfVz663YMuNv7AHN4YJRXnYgFjhohA4eVizC4d5MZxadu1FM/9ircs3H1LAP4tal4pY32XE2hEW0yALu56Ux0dUvSo21YdxV3uovyHmC4VwxUrwVMrRvLdb0JohEPH+MVjG4FDoMPz6/DpfOFQ3F4U23Lp2i4N1VdPgY7DEb3I16FrOwnkp5H471uhfHJWLf15XY8bP2gXBIj11/TKgXEizh0wSUyAHLGiTyiosuBSvv0NmFM7ak9e/1bwNT3CMj55ifPzLAhxgyEOW3BTmhxUaDInWPB818D52LSr3nRp6ha5pGEI8cgfp65pOw9PT49+RQkB5WhNZ6PiqP+PfTlkEduc1ntthVwZDCb4FE9r2QJh7hY0udQKEXDtPDkce0DVRG6W9zUs1Max+2whV/9Ze2D3RjwkPkJSKK5uM0dL9ey2bmz95cMxZw3LyCsk4JSaex6qKrCB9igI2Tf0g5P6vJUMdtG8FrdqXvakSYUlL2q3TO0I6781li1VMdj7f5YNgkpWZ1BNnoe9ePgVl7Fea/vylJ5UifPyKpYrVgADZo59D1xw2Np+J2kifQdIicDSLVOsusPDEtKhagcKtM4lY9HI5r6yegBTzJNTPP0ATwIc9yv7GtjRt6MQfjU0pGjShB0bxl2mK76olirfNcWFEaT+pBNsZ/bAfrSqxwPWaAHzjnB66usD0ngZyVezTQAd5Bqk78QshEnMFxLTlNvforytRZF32gkx4BmZ7cPdhjRKVIs1vUSvbei2JdXF6jOSxo9U="};
 const $ = (s, r=document) => r.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money = n => '$ ' + Math.round(n || 0).toLocaleString('es-AR');
@@ -81,7 +87,9 @@ const mem = { get(k){ try{ return localStorage.getItem('bc_pedido_'+k) || ''; }c
               set(k,v){ try{ localStorage.setItem('bc_pedido_'+k, v); }catch(e){} } };
 
 let C = null;            // configuracion del club (membresias, geneticas, franjas)
-const P = { memb:null, flores:{}, prExtra:0, prGen:'', franja:'', pago:'' };
+let A = null;            // cuenta del paciente, guardada en este dispositivo
+let PANT = '';           // pantalla visible: 'cuenta' o 'pedido'
+const P = { memb:null, flores:{}, prExtra:0, prGen:'', franja:'', pago:'', nota:'', ref:'', refT:0 };
 
 async function descifrar(codigo){
   const enc = new TextEncoder();
@@ -94,10 +102,12 @@ async function descifrar(codigo){
 
 async function iniciar(){
   const app = $('#app');
+  app.addEventListener('click', alTocar);
+  app.addEventListener('input', () => { if(PANT === 'pedido') actualizar(); });
   if(!PAYLOAD){ app.innerHTML = '<section><h2>Formulario sin configurar</h2><p class="ayuda">Este archivo es la plantilla. El formulario para pacientes se genera desde el sistema de gestión.</p></section>'; return; }
-  if(PAYLOAD.plain){ C = PAYLOAD.plain; return pintar(); }
+  if(PAYLOAD.plain){ C = PAYLOAD.plain; return entrar(); }
   const guardado = mem.get('codigo');
-  if(guardado){ try{ C = await descifrar(guardado); return pintar(); }catch(e){ mem.set('codigo',''); } }
+  if(guardado){ try{ C = await descifrar(guardado); return entrar(); }catch(e){ mem.set('codigo',''); } }
   app.innerHTML = '<header class="top"><h1>Bareto Club</h1></header>'
     + '<section><h2>Ingresá tu código de socio</h2><p class="ayuda">Es el código que te dimos al asociarte. Si no lo tenés, pedilo por WhatsApp.</p>'
     + '<form id="fCod"><label for="cod">Código</label><input id="cod" type="password" autocomplete="off" required>'
@@ -106,9 +116,56 @@ async function iniciar(){
   $('#fCod').addEventListener('submit', async e => {
     e.preventDefault();
     const v = $('#cod').value;
-    try{ C = await descifrar(v); mem.set('codigo', v); pintar(); }
-    catch(err){ $('#codErr').hidden = false; }
+    try{ C = await descifrar(v); }catch(err){ $('#codErr').hidden = false; return; }
+    mem.set('codigo', v); entrar();
   });
+}
+
+// ---------- cuenta del paciente (se crea una sola vez y queda en este dispositivo) ----------
+function leerCuenta(){ try{ const a = JSON.parse(mem.get('cuenta') || 'null'); return a && a.no && a.d && a.ca ? a : null; }catch(e){ return null; } }
+const nombreCuenta = () => (A.no + ' ' + A.ap).trim();
+const domicilio = () => [[A.ca, A.pi].filter(Boolean).join(' '), A.ba, A.lo].filter(Boolean).join(', ');
+// Una cuenta guardada con una version anterior del formulario puede no tener todos los datos: se pide completarla.
+const cuentaCompleta = a => !!(a && a.no && a.ap && a.d && a.rp && a.te && a.ca && a.ba && a.lo);
+function entrar(){ A = leerCuenta(); if(cuentaCompleta(A)) pintar(); else pintarCuenta(); }
+
+function pintarCuenta(){
+  PANT = 'cuenta';
+  const completa = cuentaCompleta(A);
+  const a = A || { no:mem.get('nom'), d:mem.get('dni'), ca:mem.get('dir'), re:mem.get('ref'), lo:C.localidad || '' };
+  const campo = (k, texto, attrs) => '<label for="c_'+k+'">'+texto+'</label><input id="c_'+k+'" type="text" value="'+esc(a[k] || '')+'" '+(attrs || '')+'>';
+  $('#app').innerHTML =
+    '<header class="top"><h1>'+esc(C.club)+'</h1><span>'+(A ? 'Mi cuenta' : 'Cuenta nueva')+'</span></header>'
+  + '<form id="fCta" novalidate><section><h2>'+(completa ? 'Tus datos' : A ? 'Completá tu cuenta' : 'Creá tu cuenta')+'</h2>'
+  +   '<p class="ayuda">'+(completa ? 'Con estos datos hacés tus pedidos.' : A ? 'Nos falta algún dato tuyo para poder hacerte la entrega. Completalo una sola vez.' : 'Se hace una sola vez. Después, para pedir solo elegís la membresía y la genética.')+'</p>'
+  +   campo('no', 'Nombre', 'autocomplete="given-name"') + campo('ap', 'Apellido', 'autocomplete="family-name"')
+  +   campo('d', 'DNI', 'inputmode="numeric" autocomplete="off"')
+  +   campo('rp', 'N.º de inscripción de REPROCANN', 'autocomplete="off" placeholder="Figura en tu certificado de REPROCANN"')
+  +   campo('te', 'Teléfono celular', 'inputmode="tel" autocomplete="tel"') + '</section>'
+  + '<section><h2>Domicilio real</h2><p class="ayuda">Es el único lugar donde hacemos las entregas. No se puede pedir a otra dirección.</p>'
+  +   campo('ca', 'Calle y número', 'autocomplete="address-line1"') + campo('pi', 'Piso / depto (opcional)') + campo('ba', 'Barrio') + campo('lo', 'Localidad')
+  +   campo('re', 'Referencia para el repartidor (opcional)', 'placeholder="Ej.: portón negro, timbre de arriba"')
+  +   (A ? '<p class="aviso">Si cambiás el domicilio, el club tiene que aprobar el cambio. Hasta entonces, la entrega se hace en el domicilio que ya tenías registrado.</p>' : '')
+  +   '<p class="falta" id="cErr"></p>'
+  +   '<p class="botones"><button class="btn" type="submit">'+(A ? 'Guardar' : 'Crear mi cuenta')+'</button>'
+  +   (completa ? '<button class="btn sec" type="button" id="bVolver">Volver sin cambiar</button>' : '') + '</p></section></form>';
+  $('#fCta').addEventListener('submit', e => { e.preventDefault(); guardarCuenta(); });
+  window.scrollTo(0, 0);
+}
+function guardarCuenta(){
+  const v = k => $('#c_'+k).value.trim().replace(/\s+/g, ' ');
+  const a = { no:v('no'), ap:v('ap'), d:v('d').replace(/\D/g, ''), rp:v('rp'), te:v('te'), ca:v('ca'), pi:v('pi'), ba:v('ba'), lo:v('lo'), re:v('re') };
+  const f = [];
+  if(!a.no) f.push('el nombre');
+  if(!a.ap) f.push('el apellido');
+  if(a.d.length < 7 || a.d.length > 8) f.push('el DNI (solo los números)');
+  if(!a.rp) f.push('el número de inscripción de REPROCANN');
+  if(a.te.replace(/\D/g, '').length < 8) f.push('el teléfono celular');
+  if(!a.ca) f.push('la calle y el número');
+  if(!a.ba) f.push('el barrio');
+  if(!a.lo) f.push('la localidad');
+  if(f.length){ $('#cErr').textContent = 'Falta: ' + f.join(', ') + '.'; return; }
+  A = a; mem.set('cuenta', JSON.stringify(a)); pintar(); window.scrollTo(0, 0);
 }
 
 const membSel = () => C.membresias.find(m => m.id === P.memb) || null;
@@ -118,25 +175,26 @@ function maxExtra(){ const m = membSel(); if(!m || !C.prActivo) return 0;
 const total = () => { const m = membSel(); return m ? m.precio + P.prExtra * C.prPrecio : 0; };
 
 function pintar(){
+  PANT = 'pedido';
   const app = $('#app');
   const membs = C.membresias.map(m => {
     const tot = m.gramos + m.prRegalo * C.prGramos;
-    const det = m.prRegalo ? tot + ' g en total: ' + m.gramos + ' g de flores + ' + m.prRegalo + ' pre-rolled' : m.gramos + ' g de flores secas';
+    const det = (m.prRegalo ? tot + ' g en total: ' + m.gramos + ' g de flores + ' + m.prRegalo + ' pre-rolled' : m.gramos + ' g de flores secas')
+      + (m.prDiferido ? ' + ' + m.prDiferido + ' pre-rolled de regalo en otro pedido' : '');
     return '<button type="button" class="op" data-memb="'+esc(m.id)+'" aria-pressed="false"><span><span class="t">'+esc(m.nombre)+'</span><br><span class="d">'+esc(det)+'</span></span><span class="p">'+money(m.precio)+'</span></button>';
   }).join('');
   const franjas = C.franjas.map(f => '<button type="button" class="op" data-franja="'+esc(f)+'" aria-pressed="false"><span class="t">'+esc(f)+'</span></button>').join('');
   const pagos = C.pagos.map(f => '<button type="button" class="op" data-pago="'+esc(f)+'" aria-pressed="false"><span class="t">'+esc(f)+'</span></button>').join('');
   app.innerHTML =
-    '<header class="top"><h1>'+esc(C.club)+'</h1><span>Pedido</span></header>'
+    '<header class="top"><h1>'+esc(C.club)+'</h1><button type="button" class="chip" id="bCuenta">Mi cuenta</button></header>'
+  + '<p class="hola">Hola, '+esc(A.no)+'. Armá tu pedido.</p>'
   + '<section><h2>1. Membresía</h2><p class="ayuda">Elegí una.</p><div class="opciones">'+membs+'</div></section>'
   + '<section id="sGen" hidden></section>'
   + '<section id="sPr" hidden></section>'
   + '<section><h2>4. Entrega</h2><p class="ayuda">¿Cuándo te lo llevamos?</p><div class="opciones">'+franjas+'</div>'
-  +   '<label for="dir">Dirección de entrega</label><input id="dir" type="text" autocomplete="street-address" placeholder="Calle, número, depto.">'
-  +   '<label for="ref">Barrio o referencia (opcional)</label><input id="ref" type="text"></section>'
-  + '<section><h2>5. Tus datos</h2><label for="nom">Nombre y apellido</label><input id="nom" type="text" autocomplete="name">'
-  +   '<label for="dni">DNI</label><input id="dni" type="text" inputmode="numeric" autocomplete="off"></section>'
-  + '<section><h2>6. Forma de pago</h2><div class="opciones">'+pagos+'</div>'
+  +   '<div class="dom"><small>Te lo llevamos a tu domicilio registrado</small><b>'+esc(domicilio())+'</b>'+(A.re ? '<span>'+esc(A.re)+'</span>' : '')+'</div>'
+  +   '<p class="aviso">¿Te mudaste? Cambialo en “Mi cuenta”.</p></section>'
+  + '<section><h2>5. Forma de pago</h2><div class="opciones">'+pagos+'</div>'
   +   '<label for="nota">Algo que quieras aclarar (opcional)</label><textarea id="nota"></textarea></section>'
   + '<section><h2>Resumen</h2><div class="resumen" id="res">Elegí una membresía para empezar.</div><p class="falta" id="falta"></p>'
   +   '<p style="margin:12px 0 0"><button type="button" class="btn sec" id="bCopiar" disabled>Copiar pedido</button></p>'
@@ -144,16 +202,18 @@ function pintar(){
   + (C.version ? '<p class="aviso" style="text-align:center">Formulario actualizado el ' + esc(C.version) + '</p>' : '')
   + '<div class="pie"><div class="in"><div class="tot"><small>Total</small><b id="tot">$ 0</b></div>'
   +   '<button type="button" class="btn" id="bEnviar" disabled>Enviar por WhatsApp</button></div></div>';
-  $('#dir').value = mem.get('dir'); $('#ref').value = mem.get('ref'); $('#nom').value = mem.get('nom'); $('#dni').value = mem.get('dni');
-  app.addEventListener('click', alTocar);
-  app.addEventListener('input', actualizar);
-  $('#bEnviar').addEventListener('click', enviar);
-  $('#bCopiar').addEventListener('click', copiar);
+  $('#nota').value = P.nota;
+  if(membSel()){ pintarGen(); pintarPr(); } else P.memb = null;   // al volver de "Mi cuenta" se conserva lo elegido
   actualizar();
 }
 
 function alTocar(e){
   const b = e.target.closest('button'); if(!b) return;
+  if(b.id === 'bCuenta') return pintarCuenta();
+  if(b.id === 'bVolver') return pintar();
+  if(b.id === 'bEnviar') return enviar();
+  if(b.id === 'bCopiar') return copiar();
+  if(PANT !== 'pedido') return;
   const d = b.dataset;
   if(d.memb){ P.memb = d.memb; P.flores = {}; P.prExtra = 0;
     if(C.geneticas.length === 1) P.flores[C.geneticas[0].id] = membSel().gramos;
@@ -185,7 +245,9 @@ function pintarPr(){
   s.hidden = false;
   const ops = '<option value="">Indistinto</option>' + C.geneticas.map(x => '<option value="'+esc(x.id)+'">'+esc(x.nombre)+'</option>').join('');
   let h = '<h2>3. Pre-rolled</h2>';
-  h += m.prRegalo ? '<p class="ayuda">Tu membresía incluye '+m.prRegalo+' pre-rolled de '+C.prGramos+' g.</p>' : '<p class="ayuda">Tu membresía no incluye pre-rolled.</p>';
+  if(m.prRegalo) h += '<p class="ayuda">Tu membresía incluye '+m.prRegalo+' pre-rolled de '+C.prGramos+' g.</p>';
+  if(m.prDiferido) h += '<p class="ayuda">Tu membresía incluye '+m.prDiferido+' pre-rolled de regalo. Te los entregamos en otro pedido, para no pasar el máximo de '+C.tope+' g por entrega.</p>';
+  if(!m.prRegalo && !m.prDiferido) h += '<p class="ayuda">Tu membresía no incluye pre-rolled.</p>';
   if(C.prActivo && maxExtra() > 0){
     h += '<div class="gen"><div class="n"><b>Adicionales</b><small>'+money(C.prPrecio)+' cada uno</small></div><div class="paso">'
       + '<button type="button" data-pr="-1" aria-label="Menos pre-rolled">−</button><output id="oPr">0</output><button type="button" data-pr="1" aria-label="Más pre-rolled">+</button></div></div>';
@@ -198,38 +260,34 @@ function pintarPr(){
   $('#prGen').value = P.prGen;
 }
 
-function datos(){
-  return { nom:$('#nom').value.trim(), dni:$('#dni').value.trim(), dir:$('#dir').value.trim(), ref:$('#ref').value.trim(), nota:$('#nota').value.trim() };
-}
-
 function faltantes(){
-  const m = membSel(), d = datos(), f = [];
+  const m = membSel(), f = [];
   if(!m) return ['elegir una membresía'];
   if(sumFlores() !== m.gramos) f.push('repartir los ' + m.gramos + ' g entre las genéticas');
   if(!P.franja) f.push('elegir el horario de entrega');
-  if(!d.dir) f.push('la dirección de entrega');
-  if(!d.nom) f.push('tu nombre y apellido');
-  if(!d.dni) f.push('tu DNI');
   if(!P.pago) f.push('la forma de pago');
   return f;
 }
 
 function textoPedido(conCodigo){
-  const m = membSel(), d = datos();
+  const m = membSel();
   const prs = m.prRegalo + P.prExtra;
   const gen = id => (C.geneticas.find(x => x.id === id) || {}).nombre || '';
   const fl = C.geneticas.filter(x => P.flores[x.id] > 0).map(x => P.flores[x.id] + ' g ' + x.nombre).join(' + ');
-  const L = ['*Pedido ' + C.club + '*', 'Nombre: ' + d.nom, 'DNI: ' + d.dni, 'Membresía: ' + m.nombre + ' — ' + money(m.precio), 'Flores: ' + fl];
+  const L = ['*Pedido ' + C.club + '*', 'Paciente: ' + nombreCuenta(), 'DNI: ' + A.d, 'REPROCANN: ' + A.rp, 'Membresía: ' + m.nombre + ' — ' + money(m.precio), 'Flores: ' + fl];
   if(prs){
     const partes = []; if(m.prRegalo) partes.push(m.prRegalo + ' con la membresía'); if(P.prExtra) partes.push(P.prExtra + ' adicional' + (P.prExtra > 1 ? 'es' : '') + ' (' + money(P.prExtra * C.prPrecio) + ')');
     L.push('Pre-rolled: ' + partes.join(' + ') + ' — ' + (P.prGen ? gen(P.prGen) : 'indistinto'));
   }
-  L.push('Entrega: ' + P.franja, 'Dirección: ' + d.dir + (d.ref ? ' (' + d.ref + ')' : ''), 'Pago: ' + P.pago, 'Total: ' + money(total()));
-  if(d.nota) L.push('Nota: ' + d.nota);
+  if(m.prDiferido) L.push('Pre-rolled de regalo: ' + m.prDiferido + ', se entregan en otro pedido');
+  L.push('Entrega: ' + P.franja, 'Domicilio registrado: ' + domicilio(), 'Pago: ' + P.pago, 'Total: ' + money(total()));
+  if(P.nota) L.push('Nota: ' + P.nota);
   if(!conCodigo) return L.join('\n');
-  const datosPedido = { v:1, r:P.ref, t:new Date().toISOString(), n:d.nom, d:d.dni, mi:m.id, mn:m.nombre, mp:m.precio, pr:m.prRegalo,
+  // "c" lleva los datos de la cuenta: gestion los compara con su padron y nunca toma el domicilio de aca sin aprobarlo.
+  const datosPedido = { v:1, r:P.ref, t:new Date().toISOString(), n:nombreCuenta(), d:A.d,
+    c:{ no:A.no, ap:A.ap, rp:A.rp, te:A.te, ca:A.ca, pi:A.pi, ba:A.ba, lo:A.lo, re:A.re }, mi:m.id, mn:m.nombre, mp:m.precio, pr:m.prRegalo, pd:m.prDiferido || 0,
     fl:C.geneticas.filter(x => P.flores[x.id] > 0).map(x => [x.id, x.nombre, P.flores[x.id]]),
-    pe:P.prExtra, pp:C.prPrecio, pg:P.prGen, pgn:P.prGen ? gen(P.prGen) : '', fr:P.franja, di:d.dir, re:d.ref, pa:P.pago, no:d.nota, to:total() };
+    pe:P.prExtra, pp:C.prPrecio, pg:prs ? P.prGen : '', pgn:prs && P.prGen ? gen(P.prGen) : '', fr:P.franja, pa:P.pago, no:P.nota, to:total() };
   const cod = b64url(new TextEncoder().encode(JSON.stringify(datosPedido)));
   return L.join('\n') + '\n\nCódigo del pedido (no borrar):\n#BC1.' + cod + '#';
 }
@@ -254,7 +312,7 @@ function actualizar(){
       document.querySelector('[data-pr="1"]').disabled = P.prExtra >= maxExtra(); document.querySelector('[data-pr="-1"]').disabled = P.prExtra <= 0; }
     const box = $('#prGenBox'); if(box) box.hidden = (m.prRegalo + P.prExtra) === 0;
   }
-  const d = datos(); mem.set('dir', d.dir); mem.set('ref', d.ref); mem.set('nom', d.nom); mem.set('dni', d.dni);
+  P.nota = $('#nota').value.trim();
   const f = faltantes(), listo = f.length === 0;
   $('#tot').textContent = money(total());
   $('#res').textContent = m ? (listo ? textoPedido(false) : m.nombre + ' — ' + money(total())) : 'Elegí una membresía para empezar.';
@@ -262,7 +320,11 @@ function actualizar(){
   $('#bEnviar').disabled = !listo; $('#bCopiar').disabled = !listo;
 }
 
-function refNueva(){ if(!P.ref) P.ref = Math.random().toString(36).slice(2, 8).toUpperCase(); }
+// La referencia identifica el pedido para que gestion no lo cargue dos veces si se reenvia. Pasadas 12 horas, lo mismo enviado otra vez es un pedido nuevo.
+function refNueva(){
+  if(P.ref && Date.now() - P.refT < 12 * 3600 * 1000) return;
+  P.ref = Math.random().toString(36).slice(2, 8).toUpperCase(); P.refT = Date.now();
+}
 function enviar(){
   refNueva();
   const num = String(C.whatsapp || '').replace(/\D/g, '');
