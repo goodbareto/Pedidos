@@ -72,24 +72,27 @@ input:focus, textarea:focus, select:focus, button:focus-visible{outline:2px soli
 .dom b{display:block}
 .dom span{display:block; font-size:.88rem; color:var(--muted)}
 .botones{display:flex; gap:10px; flex-wrap:wrap; margin:14px 0 0}
+.pasos{margin:0 0 6px; padding-left:22px}
+.pasos li{margin:0 0 10px}
 </style>
 </head>
 <body>
 <main id="app"></main>
 <script>
-const PAYLOAD = {"v":1,"salt":"U1lcrHzyBMVVtd8KjRb78w==","iv":"rdyNlO78XuO/7efl","ct":"lXj96Ov3Josq5swc5eW8zo+7vhNRBax0IzHFXrVecPhjt0vjIs1L+4OqntRC6W+kZ/AuAXl1ms+3+AXrkgETTLeh4Gt5usm9q21muNY+BgO+EtI8/JdfHZPNI7gY+pYIvZUt613s10j2qlRG52/akLsZZiHPKt5txy9j9EeLLok6VcVvAyL7AbTsbQ0MaGSrpxH/TlGGv6j3IrP7l+mcF0TV/kJ6QsoeFGlfnI6d0zE3bzhfMOAtD/Img3pSzlRS8FCa6bptD3izz83YjRfVz663YMuNv7AHN4YJRXnYgFjhohA4eVizC4d5MZxadu1FM/9ircs3H1LAP4tal4pY32XE2hEW0yALu56Ux0dUvSo21YdxV3uovyHmC4VwxUrwVMrRvLdb0JohEPH+MVjG4FDoMPz6/DpfOFQ3F4U23Lp2i4N1VdPgY7DEb3I16FrOwnkp5H471uhfHJWLf15XY8bP2gXBIj11/TKgXEizh0wSUyAHLGiTyiosuBSvv0NmFM7ak9e/1bwNT3CMj55ifPzLAhxgyEOW3BTmhxUaDInWPB818D52LSr3nRp6ha5pGEI8cgfp65pOw9PT49+RQkB5WhNZ6PiqP+PfTlkEduc1ntthVwZDCb4FE9r2QJh7hY0udQKEXDtPDkce0DVRG6W9zUs1Max+2whV/9Ze2D3RjwkPkJSKK5uM0dL9ey2bmz95cMxZw3LyCsk4JSaex6qKrCB9igI2Tf0g5P6vJUMdtG8FrdqXvakSYUlL2q3TO0I6781li1VMdj7f5YNgkpWZ1BNnoe9ePgVl7Fea/vylJ5UifPyKpYrVgADZo59D1xw2Np+J2kifQdIicDSLVOsusPDEtKhagcKtM4lY9HI5r6yegBTzJNTPP0ATwIc9yv7GtjRt6MQfjU0pGjShB0bxl2mK76olirfNcWFEaT+pBNsZ/bAfrSqxwPWaAHzjnB66usD0ngZyVezTQAd5Bqk78QshEnMFxLTlNvforytRZF32gkx4BmZ7cPdhjRKVIs1vUSvbei2JdXF6jOSxo9U="};
+const PAYLOAD = {"v":1,"salt":"6S3VVRTwiFKJNiy+B4Kk1A==","iv":"qj1d/6XOrTurrNiE","ct":"raFp17oXSI3Gm88n84HuyEwe8y7wKiZNr6rTtPbVWOwY7/hO9iJgc/RYIJqyORM0vUHIxgL2n9gvk/uXm0tB8NPsZfMC6hAh4L/S6QOgwQmiMgI0TBOUjoWJ1VvHSBxXQcYe/AeVfDynM0Bfamaf+YUIhcWzTrJs0o7EBLh8gdxlOTykkhl+FRmJgYXr04Zcp3P7ZzrPr3INVw7fbFRppNJ9XUnJoo/YTnROkU4KgPbM6D+DlVX1HwDa3FY6wOuWlcLZ774oH1itQRUeqBI+2I3SiVj5HGHfzMpzN6KK5GV8hyRP0rZ1p9KiUMaHUwdY6NZcZR2FvyymcVK/g2WYv0dNkp4oH55YP0R1WWbWe8FO/xG+8hEsuC2OHPpI572qAbWgGiEvgmMNk5TYMBU3bghQOm9iUR4bXSlTAYlwgJY6riqlaLlWqoQf9+/jwvx8N3aiP8qZ1tKFL31yKIs+yp72hPKffPWC3rhYi1Deu7E4xHa3vR2cFHz7CFty2xFnDxpAI4xv51PSl0tkPHLMf1ulDo5muaGifwXKHLWRDEOT7Gjq3wJzzId5/cE8F4MclFmoF6b1ziiQ5imI3RNUeacLsIWwHJ3A1AhY1IM7dK8v0A3jyEDdY5hNrSerzbms70GMJnhIVxJpFlHmh0Ej1tc5Y+V+iIfmmzYFsaaIYpi8vnk9bxNPTYMpTk2HSF8VzMmLnf2CtdQQ2i0S2VeUCatPTEjLH7hVjk2JLDTSEzHycCBfrAHP0yMYWRw/nlgnPCIHflIS2TitYr8q1CcItAaBAqtfdtutO+AQSkFs8tPDXFzhLqx7jHc6muBnFI9jlQyiCq/veLHWhCyWH7RPpFYr4FjdS9+n/TS180cd0PkshSL5ocI5OaInCz7gGx0RX7bB7oH366tRR3CBtOw4uVQqz3XB8g/9CsTETlG3hqnI6lmOAmld9zNT52dDDSW4LMS1Zu6BEi2FgD4OthtU1QS+ZJOG3io0i2ocV7snNC2z3r6gbaE3asxgm8aZdPeDQy4BCgXFdfAZD1ESjfCxV8tvC4rOVnJLRqD/sVWXTp2/otJpXvsPX5NMWLYpg1+AGKW3KvqeAAQHDtCQWaqQsk/6873gncSpLsu9ss8TCmcZNj/MBI/vVgUNnVRARFNHPesvtcjUCvjFpaMycuwOQAbesJ5aMQQ1kU9XElyCBNvXu/kUGtYn8aUZ2zi+RYzzQWXMzOdAgQI="};
 const $ = (s, r=document) => r.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money = n => '$ ' + Math.round(n || 0).toLocaleString('es-AR');
 const b64d = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
-function b64url(u8){ let s=''; for(const b of u8) s += String.fromCharCode(b); return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+function b64urlD(s){ const b = s.replace(/-/g, '+').replace(/_/g, '/'); return Uint8Array.from(atob(b + '==='.slice((b.length + 3) % 4)), c => c.charCodeAt(0)); }
 const mem = { get(k){ try{ return localStorage.getItem('bc_pedido_'+k) || ''; }catch(e){ return ''; } },
               set(k,v){ try{ localStorage.setItem('bc_pedido_'+k, v); }catch(e){} } };
 
 let C = null;            // configuracion del club (membresias, geneticas, franjas)
 let A = null;            // cuenta del paciente, guardada en este dispositivo
-let PANT = '';           // pantalla visible: 'cuenta' o 'pedido'
-const P = { memb:null, flores:{}, prExtra:0, prGen:'', franja:'', pago:'', nota:'', ref:'', refT:0 };
+let PANT = '';           // pantalla visible: 'cuenta', 'pendiente' o 'pedido'
+let ACTIVA = false;      // la cuenta de este dispositivo tiene un enlace de activacion valido
+const P = { memb:null, flores:{}, prExtra:0, prGen:'', franja:'', pago:'', nota:'', ref:'', refT:0, refTxt:'' };
 
 async function descifrar(codigo){
   const enc = new TextEncoder();
@@ -104,6 +107,10 @@ async function iniciar(){
   const app = $('#app');
   app.addEventListener('click', alTocar);
   app.addEventListener('input', () => { if(PANT === 'pedido') actualizar(); });
+  // El enlace de activacion llega como .../#alta=<firma>.bc : se guarda en este dispositivo y se saca de la barra de direcciones.
+  const sacarAlta = () => { if(!tomarAlta(location.hash)) return false; try{ history.replaceState(null, '', location.pathname + location.search); }catch(e){} return true; };
+  sacarAlta();
+  window.addEventListener('hashchange', () => { if(sacarAlta() && C) entrar(); });
   if(!PAYLOAD){ app.innerHTML = '<section><h2>Formulario sin configurar</h2><p class="ayuda">Este archivo es la plantilla. El formulario para pacientes se genera desde el sistema de gestión.</p></section>'; return; }
   if(PAYLOAD.plain){ C = PAYLOAD.plain; return entrar(); }
   const guardado = mem.get('codigo');
@@ -127,7 +134,73 @@ const nombreCuenta = () => (A.no + ' ' + A.ap).trim();
 const domicilio = () => [[A.ca, A.pi].filter(Boolean).join(' '), A.ba, A.lo].filter(Boolean).join(', ');
 // Una cuenta guardada con una version anterior del formulario puede no tener todos los datos: se pide completarla.
 const cuentaCompleta = a => !!(a && a.no && a.ap && a.d && a.rp && a.te && a.ca && a.ba && a.lo);
-function entrar(){ A = leerCuenta(); if(cuentaCompleta(A)) pintar(); else pintarCuenta(); }
+const CLAVES = ['no', 'ap', 'd', 'rp', 'te', 'ca', 'pi', 'ba', 'lo', 're'];
+
+// ---------- activacion ----------
+// Crear la cuenta no alcanza para pedir: el club la aprueba y manda un enlace de activacion, que es una firma del DNI.
+// Aca solo se puede comprobar la firma (con la clave publica que viene en la configuracion), no fabricarla.
+// Un enlace que llega se guarda como candidato ('altaNueva'): recien reemplaza a la activacion guardada ('alta') si sirve para el DNI de esta cuenta.
+// Asi, tocar por error el enlace de otra persona no desactiva una cuenta que ya estaba activa.
+function tomarAlta(texto){
+  const m = String(texto || '').match(/([A-Za-z0-9_-]{86})\.bc(?![A-Za-z0-9_-])/);
+  if(m) mem.set('altaNueva', m[1]);
+  return !!m;
+}
+async function firmaVale(firma){
+  if(!firma) return false;
+  try{
+    const clave = await crypto.subtle.importKey('jwk', C.firma, { name:'ECDSA', namedCurve:'P-256' }, false, ['verify']);
+    return await crypto.subtle.verify({ name:'ECDSA', hash:'SHA-256' }, clave, b64urlD(firma), new TextEncoder().encode('BC-ALTA|' + A.d));
+  }catch(e){ return false; }
+}
+async function activa(){
+  if(!C.firma) return true;                       // formulario generado sin aprobacion de cuentas
+  if(!A || !window.crypto || !crypto.subtle) return false;
+  const nueva = mem.get('altaNueva');
+  if(nueva && await firmaVale(nueva)){ mem.set('alta', nueva); mem.set('altaNueva', ''); return true; }
+  return firmaVale(mem.get('alta'));
+}
+async function entrar(){
+  A = leerCuenta(); ACTIVA = false;
+  if(!cuentaCompleta(A)) return pintarCuenta();
+  ACTIVA = await activa();
+  if(ACTIVA) pintar(); else pintarPendiente();
+}
+const urlWhatsApp = texto => 'https://wa.me/' + String(C.whatsapp || '').replace(/\D/g, '') + '?text=' + encodeURIComponent(texto);
+function abrirWhatsApp(texto){ window.open(urlWhatsApp(texto), '_blank'); }
+// Mensaje con los datos de la cuenta. Gestion lo lee renglon por renglon, asi que cada dato va con su rotulo.
+function textoCuenta(cambio){
+  const L = ['*' + (cambio ? 'Cambio de datos de cuenta' : 'Solicitud de cuenta') + ' ' + C.club + '*',
+    'Nombre: ' + A.no, 'Apellido: ' + A.ap, 'DNI: ' + A.d, 'REPROCANN: ' + A.rp, 'Teléfono: ' + A.te, 'Calle y número: ' + A.ca];
+  if(A.pi) L.push('Piso / depto: ' + A.pi);
+  L.push('Barrio: ' + A.ba, 'Localidad: ' + A.lo);
+  if(A.re) L.push('Referencia: ' + A.re);
+  return L.join('\n');
+}
+function pintarPendiente(msg){
+  PANT = 'pendiente';
+  $('#app').innerHTML =
+    '<header class="top"><h1>'+esc(C.club)+'</h1><span>Cuenta pendiente</span></header>'
+  + '<section><h2>Tu cuenta espera la aprobación del club</h2>'
+  +   (msg ? '<p class="estado ok" style="margin:0 0 10px">'+esc(msg)+'</p>' : '')
+  +   '<p class="ayuda">Hola, '+esc(A.no)+'. Para poder hacer pedidos faltan estos pasos:</p>'
+  +   '<ol class="pasos"><li><b>Mandanos tu solicitud.</b> Tocá el botón de abajo: se abre WhatsApp con el mensaje ya escrito y solo falta enviarlo. Si ya lo enviaste, no hace falta repetirlo.</li>'
+  +   '<li><b>Esperá nuestra respuesta.</b> Cuando aprobemos tu cuenta te mandamos un enlace por WhatsApp.</li>'
+  +   '<li><b>Tocá ese enlace</b> desde este mismo teléfono y ya podés pedir.</li></ol>'
+  +   '<p class="botones"><button type="button" class="btn" id="bSolicitud">Enviar solicitud por WhatsApp</button>'
+  +   '<button type="button" class="btn sec" id="bCuenta">Revisar mis datos</button></p></section>'
+  + '<section><h2>¿Ya te aprobamos y sigue sin abrir?</h2><p class="ayuda">Copiá el mensaje completo que te mandamos con el enlace y pegalo acá.</p>'
+  +   '<label for="alta">Mensaje de aprobación</label><textarea id="alta"></textarea><p class="falta" id="aErr"></p>'
+  +   '<p class="botones"><button type="button" class="btn sec" id="bActivar">Activar mi cuenta</button></p></section>'
+  + (C.version ? '<p class="aviso" style="text-align:center">Formulario actualizado el ' + esc(C.version) + '</p>' : '');
+  window.scrollTo(0, 0);
+}
+async function activar(){
+  const hay = tomarAlta($('#alta').value);
+  if(hay){ ACTIVA = await activa(); if(ACTIVA) return pintar(); }
+  $('#aErr').textContent = hay ? 'Ese enlace no es de esta cuenta (es de otro DNI) o ya no sirve. Pedinos uno nuevo por WhatsApp.'
+    : 'No encontré el enlace en ese texto. Copiá el mensaje completo que te mandamos.';
+}
 
 function pintarCuenta(){
   PANT = 'cuenta';
@@ -137,7 +210,7 @@ function pintarCuenta(){
   $('#app').innerHTML =
     '<header class="top"><h1>'+esc(C.club)+'</h1><span>'+(A ? 'Mi cuenta' : 'Cuenta nueva')+'</span></header>'
   + '<form id="fCta" novalidate><section><h2>'+(completa ? 'Tus datos' : A ? 'Completá tu cuenta' : 'Creá tu cuenta')+'</h2>'
-  +   '<p class="ayuda">'+(completa ? 'Con estos datos hacés tus pedidos.' : A ? 'Nos falta algún dato tuyo para poder hacerte la entrega. Completalo una sola vez.' : 'Se hace una sola vez. Después, para pedir solo elegís la membresía y la genética.')+'</p>'
+  +   '<p class="ayuda">'+(completa ? 'Con estos datos hacés tus pedidos.' : A ? 'Nos falta algún dato tuyo para poder hacerte la entrega. Completalo una sola vez.' : 'Se hace una sola vez. El club la revisa y te avisa por WhatsApp cuando esté aprobada.')+'</p>'
   +   campo('no', 'Nombre', 'autocomplete="given-name"') + campo('ap', 'Apellido', 'autocomplete="family-name"')
   +   campo('d', 'DNI', 'inputmode="numeric" autocomplete="off"')
   +   campo('rp', 'N.º de inscripción de REPROCANN', 'autocomplete="off" placeholder="Figura en tu certificado de REPROCANN"')
@@ -145,14 +218,15 @@ function pintarCuenta(){
   + '<section><h2>Domicilio real</h2><p class="ayuda">Es el único lugar donde hacemos las entregas. No se puede pedir a otra dirección.</p>'
   +   campo('ca', 'Calle y número', 'autocomplete="address-line1"') + campo('pi', 'Piso / depto (opcional)') + campo('ba', 'Barrio') + campo('lo', 'Localidad')
   +   campo('re', 'Referencia para el repartidor (opcional)', 'placeholder="Ej.: portón negro, timbre de arriba"')
-  +   (A ? '<p class="aviso">Si cambiás el domicilio, el club tiene que aprobar el cambio. Hasta entonces, la entrega se hace en el domicilio que ya tenías registrado.</p>' : '')
+  +   (A ? '<p class="aviso">Si cambiás algún dato se abre WhatsApp con el cambio ya escrito, para que nos lo envíes. El club lo tiene que aprobar: hasta entonces, la entrega se hace en el domicilio que ya tenías registrado.</p>'
+           : '<p class="aviso">Al tocar “Crear mi cuenta” se abre WhatsApp con tu solicitud ya escrita. Solo falta que la envíes.</p>')
   +   '<p class="falta" id="cErr"></p>'
   +   '<p class="botones"><button class="btn" type="submit">'+(A ? 'Guardar' : 'Crear mi cuenta')+'</button>'
   +   (completa ? '<button class="btn sec" type="button" id="bVolver">Volver sin cambiar</button>' : '') + '</p></section></form>';
   $('#fCta').addEventListener('submit', e => { e.preventDefault(); guardarCuenta(); });
   window.scrollTo(0, 0);
 }
-function guardarCuenta(){
+async function guardarCuenta(){
   const v = k => $('#c_'+k).value.trim().replace(/\s+/g, ' ');
   const a = { no:v('no'), ap:v('ap'), d:v('d').replace(/\D/g, ''), rp:v('rp'), te:v('te'), ca:v('ca'), pi:v('pi'), ba:v('ba'), lo:v('lo'), re:v('re') };
   const f = [];
@@ -165,7 +239,17 @@ function guardarCuenta(){
   if(!a.ba) f.push('el barrio');
   if(!a.lo) f.push('la localidad');
   if(f.length){ $('#cErr').textContent = 'Falta: ' + f.join(', ') + '.'; return; }
-  A = a; mem.set('cuenta', JSON.stringify(a)); pintar(); window.scrollTo(0, 0);
+  const antes = A, cambio = !antes || CLAVES.some(k => (antes[k] || '') !== a[k]);
+  // Si cambio algo, el club tiene que recibirlo. La ventana de WhatsApp se abre ya, en el mismo toque (despues de una espera el navegador la bloquea),
+  // y la direccion se le carga cuando se sabe si corresponde "solicitud de cuenta" o "cambio de datos": depende de si el enlace de activacion sirve para este DNI.
+  const w = cambio ? window.open('', '_blank') : null;
+  A = a; mem.set('cuenta', JSON.stringify(a));
+  ACTIVA = await activa();
+  if(cambio && w) w.location = urlWhatsApp(textoCuenta(ACTIVA));
+  mem.set('cambioPend', cambio && ACTIVA ? '1' : ACTIVA ? mem.get('cambioPend') : '');   // recordatorio hasta que el paciente diga que envio el cambio
+  window.scrollTo(0, 0);
+  if(ACTIVA) return pintar();
+  pintarPendiente(!cambio ? '' : w ? 'Se abrió WhatsApp con tu solicitud. Enviala para que el club la reciba.' : 'Tus datos quedaron guardados. Ahora tocá “Enviar solicitud por WhatsApp”.');
 }
 
 const membSel = () => C.membresias.find(m => m.id === P.memb) || null;
@@ -188,6 +272,8 @@ function pintar(){
   app.innerHTML =
     '<header class="top"><h1>'+esc(C.club)+'</h1><button type="button" class="chip" id="bCuenta">Mi cuenta</button></header>'
   + '<p class="hola">Hola, '+esc(A.no)+'. Armá tu pedido.</p>'
+  + (mem.get('cambioPend') ? '<section><h2>Cambiaste tus datos</h2><p class="ayuda">El club tiene que recibir el cambio y aprobarlo. Hasta entonces seguimos usando los datos anteriores, también para la entrega.</p>'
+      + '<p class="botones"><button type="button" class="btn sec" id="bCambio">Enviar el cambio por WhatsApp</button><button type="button" class="btn sec" id="bCambioOk">Ya lo envié</button></p></section>' : '')
   + '<section><h2>1. Membresía</h2><p class="ayuda">Elegí una.</p><div class="opciones">'+membs+'</div></section>'
   + '<section id="sGen" hidden></section>'
   + '<section id="sPr" hidden></section>'
@@ -210,7 +296,11 @@ function pintar(){
 function alTocar(e){
   const b = e.target.closest('button'); if(!b) return;
   if(b.id === 'bCuenta') return pintarCuenta();
-  if(b.id === 'bVolver') return pintar();
+  if(b.id === 'bVolver') return entrar();
+  if(b.id === 'bSolicitud') return abrirWhatsApp(textoCuenta(false));
+  if(b.id === 'bActivar') return activar();
+  if(b.id === 'bCambio') return abrirWhatsApp(textoCuenta(true));
+  if(b.id === 'bCambioOk'){ mem.set('cambioPend', ''); return pintar(); }
   if(b.id === 'bEnviar') return enviar();
   if(b.id === 'bCopiar') return copiar();
   if(PANT !== 'pedido') return;
@@ -269,31 +359,23 @@ function faltantes(){
   return f;
 }
 
-function textoPedido(conCodigo){
-  const m = membSel();
-  const prs = m.prRegalo + P.prExtra;
+function textoPedido(conRef){
+  const m = membSel(), prs = m.prRegalo + P.prExtra, p2 = n => String(n).padStart(2, '0'), d = new Date();
   const gen = id => (C.geneticas.find(x => x.id === id) || {}).nombre || '';
   const fl = C.geneticas.filter(x => P.flores[x.id] > 0).map(x => P.flores[x.id] + ' g ' + x.nombre).join(' + ');
-  const L = ['*Pedido ' + C.club + '*', 'Paciente: ' + nombreCuenta(), 'DNI: ' + A.d, 'REPROCANN: ' + A.rp, 'Membresía: ' + m.nombre + ' — ' + money(m.precio), 'Flores: ' + fl];
-  if(prs){
-    const partes = []; if(m.prRegalo) partes.push(m.prRegalo + ' con la membresía'); if(P.prExtra) partes.push(P.prExtra + ' adicional' + (P.prExtra > 1 ? 'es' : '') + ' (' + money(P.prExtra * C.prPrecio) + ')');
-    L.push('Pre-rolled: ' + partes.join(' + ') + ' — ' + (P.prGen ? gen(P.prGen) : 'indistinto'));
-  }
-  if(m.prDiferido) L.push('Pre-rolled de regalo: ' + m.prDiferido + ', se entregan en otro pedido');
+  const L = ['*Pedido ' + C.club + (conRef ? ' N.º ' + P.ref : '') + '*'];
+  if(conRef) L.push('Fecha: ' + p2(d.getDate()) + '/' + p2(d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + p2(d.getHours()) + ':' + p2(d.getMinutes()));
+  L.push('Paciente: ' + nombreCuenta(), 'DNI: ' + A.d, 'Membresía: ' + m.nombre + ' — ' + money(m.precio), 'Flores: ' + fl);
+  if(m.prRegalo) L.push('Pre-rolled incluidos: ' + m.prRegalo);
+  if(P.prExtra) L.push('Pre-rolled adicionales: ' + P.prExtra + ' (' + money(P.prExtra * C.prPrecio) + ')');
+  if(prs) L.push('Genética de los pre-rolled: ' + (P.prGen ? gen(P.prGen) : 'indistinto'));
+  if(m.prDiferido) L.push('Pre-rolled de regalo para otro pedido: ' + m.prDiferido);
   L.push('Entrega: ' + P.franja, 'Domicilio registrado: ' + domicilio(), 'Pago: ' + P.pago, 'Total: ' + money(total()));
-  if(P.nota) L.push('Nota: ' + P.nota);
-  if(!conCodigo) return L.join('\n');
-  // "c" lleva los datos de la cuenta: gestion los compara con su padron y nunca toma el domicilio de aca sin aprobarlo.
-  const datosPedido = { v:1, r:P.ref, t:new Date().toISOString(), n:nombreCuenta(), d:A.d,
-    c:{ no:A.no, ap:A.ap, rp:A.rp, te:A.te, ca:A.ca, pi:A.pi, ba:A.ba, lo:A.lo, re:A.re }, mi:m.id, mn:m.nombre, mp:m.precio, pr:m.prRegalo, pd:m.prDiferido || 0,
-    fl:C.geneticas.filter(x => P.flores[x.id] > 0).map(x => [x.id, x.nombre, P.flores[x.id]]),
-    pe:P.prExtra, pp:C.prPrecio, pg:prs ? P.prGen : '', pgn:prs && P.prGen ? gen(P.prGen) : '', fr:P.franja, pa:P.pago, no:P.nota, to:total() };
-  const cod = b64url(new TextEncoder().encode(JSON.stringify(datosPedido)));
-  return L.join('\n') + '\n\nCódigo del pedido (no borrar):\n#BC1.' + cod + '#';
+  if(P.nota) L.push('Nota: ' + P.nota.replace(/\s+/g, ' '));
+  return L.join('\n');
 }
 
 function actualizar(){
-  P.ref = '';            // cualquier cambio hace que sea un pedido distinto
   const m = membSel();
   document.querySelectorAll('[data-memb]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.memb === P.memb)));
   document.querySelectorAll('[data-franja]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.franja === P.franja)));
@@ -320,15 +402,16 @@ function actualizar(){
   $('#bEnviar').disabled = !listo; $('#bCopiar').disabled = !listo;
 }
 
-// La referencia identifica el pedido para que gestion no lo cargue dos veces si se reenvia. Pasadas 12 horas, lo mismo enviado otra vez es un pedido nuevo.
+// La referencia (6 letras y numeros, en el titulo del mensaje) identifica el pedido para que gestion no lo cargue dos veces si se reenvia. Pasadas 12 horas, lo mismo enviado otra vez es un pedido nuevo.
 function refNueva(){
-  if(P.ref && Date.now() - P.refT < 12 * 3600 * 1000) return;
-  P.ref = Math.random().toString(36).slice(2, 8).toUpperCase(); P.refT = Date.now();
+  const t = textoPedido(false);                               // el mismo pedido conserva su referencia; si cambia algo, es otro pedido
+  if(P.ref && P.refTxt === t && Date.now() - P.refT < 12 * 3600 * 1000) return;
+  const letras = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';     // sin 0/O ni 1/I, para que no se confundan al leerla
+  P.ref = Array.from(crypto.getRandomValues(new Uint8Array(6)), b => letras[b % 32]).join(''); P.refT = Date.now(); P.refTxt = t;
 }
 function enviar(){
   refNueva();
-  const num = String(C.whatsapp || '').replace(/\D/g, '');
-  window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(textoPedido(true)), '_blank');
+  abrirWhatsApp(textoPedido(true));
 }
 async function copiar(){
   refNueva();
